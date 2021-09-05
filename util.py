@@ -1,11 +1,16 @@
 import hmac
 import mimetypes
-import os
+import traceback
+from functools import wraps
 from pathlib import Path
+from typing import Type
 
 from fastapi import HTTPException
+from pydantic import BaseModel
 from starlette import status
 from starlette.responses import Response
+
+from config import settings
 
 
 def apply_cache_headers(response: Response) -> None:
@@ -41,10 +46,36 @@ def static_response(file_name: str) -> Response:
 
 def authorize(token: str) -> None:
     exc = HTTPException(status_code=404, detail="not found")
-    expected_token = os.getenv("ADMIN_TOKEN")
-    if not expected_token:
+
+    if not settings.admin_token:
         raise exc
 
-    tokens_are_equal = hmac.compare_digest(token, expected_token)
+    tokens_are_equal = hmac.compare_digest(token, settings.admin_token)
     if not tokens_are_equal:
         raise exc
+
+
+BaseModelType = Type[BaseModel]
+
+
+def update_forward_refs(klass: BaseModelType) -> BaseModelType:
+    klass.update_forward_refs()
+    return klass
+
+
+def hide_webhook_secret(whi) -> None:
+    if not (whi and whi.url):
+        return
+
+    whi.url = whi.url.replace(settings.webhook_secret, "***")
+
+
+def safe(handler):
+    @wraps(handler)
+    async def safe_handler(*args, **kwargs):
+        try:
+            return await handler(*args, **kwargs)
+        except Exception:
+            traceback.print_exc()
+
+    return safe_handler
