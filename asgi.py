@@ -70,6 +70,20 @@ async def _(
     client: httpx.AsyncClient = Telegram,
     update: Update = Body(...),
 ):
+    user = str(update.message.chat.id)
+    data = update.message.text
+
+    if data == "stop":
+        number = await db.add_number(user, 0)
+    elif data.isdigit():
+        number = await db.add_number(user, int(data))
+    else:
+        number = None
+
+    if number is None:
+        message = f"непонятно: {data!r}"
+    else:
+        message = f"твоё текущее число: {number}"
     await sendMessage(
         client,
         SendMessageRequest(
