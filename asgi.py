@@ -84,14 +84,16 @@ async def _(
         message = f"непонятно: {data!r}"
     else:
         message = f"твоё текущее число: {number}"
+
     await sendMessage(
         client,
         SendMessageRequest(
             chat_id=update.message.chat.id,
             reply_to_message_id=update.message.message_id,
-            text=task_3(update.message.text),
+            text=message,
         ),
     )
+
 
 
 @app.get("/")
