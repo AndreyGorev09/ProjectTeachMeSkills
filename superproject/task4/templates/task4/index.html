@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Проверка Task4</title>
+</head>
+<body>
+<h1>Проверка Task 4</h1>
+<hr>
+<section>
+    <h2>Что тестим?</h2>
+    <div>
+        <label for="id_service">Твой сервис: </label>
+        <input id="id_service" placeholder="http://твой.сервер" type="url">
+    </div>
+    <div>
+        <label for="id_name">Представься: </label>
+        <input id="id_name" placeholder="Иван Иванов" type="text">
+    </div>
+    <button id="id_check">Проверить мой сервис</button>
+</section>
+<section hidden id="id_results">
+    <h2>Результат</h2>
+    <p>Статус: <span id="id_ok"></span></p>
+    <div>
+        <span>Пояснение: </span>
+        <pre id="id_description" style="border: 1px solid red"></pre>
+    </div>
+    <p>Тайминг: <span id="id_timing"></span> мс</p>
+</section>
+<script defer src="{% static 'task4/checks.js' %}"></script>
+</body>
+</html>
