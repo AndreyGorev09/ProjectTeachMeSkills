@@ -7,3 +7,5 @@ httpx
 asyncpg
 psycopg2
 dj-database-url
+django-ipware
+delorean
