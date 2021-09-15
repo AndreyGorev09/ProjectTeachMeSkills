@@ -12,10 +12,7 @@ SECRET_KEY = 'django-insecure-$rdv96m6ewiv*2%ckf0r5xilt+4@_bvmxwkgn(+1j-$o4=!r88
 DEBUG = True
 
 
-ALLOWED_HOSTS = ["127.0.0.1",
-                 "localhost",
-                 "andreigorev.herokuapp.com",
-]
+ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
@@ -33,7 +30,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+   # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
