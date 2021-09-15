@@ -11,7 +11,7 @@ def hello_world(request: HttpRequest):
 
 def view(request: HttpRequest):
     if request.method != "POST":
-        return HttpResponse(status=405)
+        return HttpResponse(""""Use only the"POST" method""", status=405)
 
     name = request.headers.get("x-user")
     if not name: return HttpResponse("Header X-USER is not set", status=422)
