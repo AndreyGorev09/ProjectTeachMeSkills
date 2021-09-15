@@ -5,8 +5,6 @@ from task4.models import Numbers
 import json
 
 
-
-
 def hello_world(request: HttpRequest):
     return HttpResponse("Hello world")
 
@@ -19,15 +17,17 @@ def view(request: HttpRequest):
     if not name: return HttpResponse(status=422)
 
     cell = json.loads(request.body)
-    obj,_created = Numbers.objects.get_or_create(name=name)
+    obj, _created = Numbers.objects.get_or_create(name=name)
     if type(cell) is int:
+        if not -100 <= cell <= 100:
+            return HttpResponse("Enter a number from -100 to 100", status=422)
         obj.n += cell
         obj.save()
-        return HttpResponse(f"Hello {name}, your number = {obj.n}")
+        return HttpResponse({obj.n})
     elif cell == 'stop':
-        return HttpResponse(f"Your body '{cell}', actual numbers {obj.n}")
+        return HttpResponse({obj.n})
     else:
-        return HttpResponse("""Your "body" should be a "number" or the word "stop" """)
+        return HttpResponse("""Your "body" should be a "number" or the word "stop" """, status=422)
 
 
 
