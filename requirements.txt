@@ -10,3 +10,4 @@ dj-database-url
 django-ipware
 delorean
 django
+django-cors-headers
