@@ -14,7 +14,7 @@ def view(request: HttpRequest):
         return HttpResponse(status=405)
 
     name = request.headers.get("x-user")
-    if not name: return HttpResponse(status=422)
+    if not name: return HttpResponse("Header X-USER is not set", status=422)
     try:
         cell = json.loads(request.body)
         obj, _created = Numbers.objects.get_or_create(name=name)
