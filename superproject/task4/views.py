@@ -14,7 +14,7 @@ def view(request: HttpRequest):
         return HttpResponse(""""Use only the"POST" method""", status=405)
 
     name = request.headers.get("x-user")
-    if not name: return HttpResponse("Header X-USER is not set", status=422)
+    if not name: return HttpResponse("Header X-USER is not set", status=403)
     try:
         cell = json.loads(request.body)
         obj, _created = Numbers.objects.get_or_create(name=name)
@@ -24,10 +24,11 @@ def view(request: HttpRequest):
             obj.n += cell
             obj.save()
             return HttpResponse({obj.n})
-        elif cell == 'stop':
-            return HttpResponse({obj.n})
+        elif cell != 'stop':
+            return HttpResponse("This input is not supported", status=422)
+        return HttpResponse({obj.n})
     except ValueError as err:
-            return HttpResponse(f"""Your "body" should be a "number" or the word "stop", {err} """, status=422)
+        return HttpResponse(f"""Your "body" should be a "number" or the word "stop": {err} """, status=422)
 
 
 
