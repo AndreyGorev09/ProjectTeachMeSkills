@@ -1,8 +1,12 @@
 from django.db import models
 
+class CheckManager(models.Manager):
+    pass
 
 
 class Numbers(models.Model):
+    objects = CheckManager()
+
     name = models.TextField(unique=True)
     n = models.BigIntegerField(default=0)
 

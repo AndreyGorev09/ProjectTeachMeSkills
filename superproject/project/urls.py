@@ -1,11 +1,9 @@
 from django.contrib import admin
-from django.urls import path
-
-from task4.views import hello_world, view
+from django.urls import path, include
 
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('hw/', hello_world),
-    path("task4/", view)
-]
+urlpatterns = (
+    path("admin/", admin.site.urls),
+    path("", include("task4.urls")),
+    path("blog/", include("blog.urls"))
+)

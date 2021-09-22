@@ -1,12 +1,19 @@
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
+from django.views.generic import ListView
 
 from task4.models import Numbers
 
 import json
 
 
-def hello_world(request: HttpRequest):
+def hw(request: HttpRequest):
     return HttpResponse("Hello world")
+
+
+class ShowNumbersView(ListView):
+    templates_name = "task4/numbers_list.html"
+    model = Numbers
 
 
 def view(request: HttpRequest):
