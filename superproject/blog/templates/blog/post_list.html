@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<article>
+    <h1>All posts</h1>
+    <hr>
+    {% for post in object_list %}
+        <section id="id_post_{{ post.pk }}">
+            <a href="{{ post.get_absolute_url }}"><h2>{{ post.title }}</h2></a>
+            <p>{{ post.content|default:"(no content)" }}</p>
+        </section>
+    {% endfor %}
+</article>
+<script>
+    document.addEventListener("DOMContentLoaded", (evt) => {
+        let article = document.querySelector("article");
+        if (!article.querySelector("section")) {
+            article.textContent = "(no posts)"
+        }
+    });
+</script>
+</body>
+</html>

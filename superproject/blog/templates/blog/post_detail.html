@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<article>
+    <h1>{{ object.title }}</h1>
+    <a href="/blog/">(back to all posts)</a>
+    <hr>
+    <p>{{ post.content|default:"(no content)" }}</p>
+</article>
+</body>
+</html>
